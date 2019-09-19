@@ -1,6 +1,6 @@
 Journal 1
 
-    For this week I picked one project from the 4 ideas I had. I thought picking the app would be the 
+   For this week I picked one project from the 4 ideas I had. I thought picking the app would be the 
 easiest part of this project, but it actually ended up being a lot harder. I wanted to come up with a new 
 idea that wasn’t already out there and with the app idea I chose (campus map) I think it fulfills that. 
 It also allows me to learn a lot more beyond basic Swift with the features I plan to look into if time 
