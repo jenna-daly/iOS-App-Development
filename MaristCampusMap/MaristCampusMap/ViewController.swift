@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var AddLocationView: UIView!
     @IBOutlet weak var LocationList: UIPickerView!
     @IBOutlet weak var WelcomeImage: UIImageView!
+    @IBOutlet weak var EnterNewLocation: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()

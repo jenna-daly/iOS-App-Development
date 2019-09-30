@@ -64,10 +64,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <state key="normal" title="Add"/>
                                     </button>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ContainerImage" translatesAutoresizingMaskIntoConstraints="NO" id="7WC-Mz-hVE">
-                                        <rect key="frame" x="67" y="136" width="240" height="125"/>
+                                    <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Mz-Eu-TI1">
+                                        <rect key="frame" x="39" y="170" width="297" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
@@ -78,6 +80,7 @@
                     <connections>
                         <outlet property="AddLocationBTN" destination="n0D-rb-aSU" id="cDm-Ld-wDm"/>
                         <outlet property="AddLocationView" destination="Ebt-Ac-axB" id="Ubl-L0-dXk"/>
+                        <outlet property="EnterNewLocation" destination="3Mz-Eu-TI1" id="Yh2-WG-GOD"/>
                         <outlet property="LocationList" destination="3M9-Be-9sh" id="ewT-iB-4vK"/>
                         <outlet property="MapArrow" destination="4ll-hN-5qb" id="Y9R-tj-fPY"/>
                         <outlet property="Nav" destination="QUO-gs-0bT" id="gWJ-8g-NtV"/>
@@ -92,7 +95,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ContainerImage" width="474" height="72"/>
         <image name="IntroScreen" width="436" height="300"/>
         <image name="MapArrow" width="432" height="456"/>
         <image name="plus.square.fill" catalog="system" width="64" height="56"/>
