@@ -1,0 +1,30 @@
+{
+	"Locations": [
+			{
+			"Name": "Hancock",      
+			"Lat": 41.722712,
+			"Long": -73.934392
+			},
+			{
+			"Name": "Donnelly",      
+			"Lat": 41.721012,
+			"Long": -73.932929 
+			},
+			{
+			"Name": "Dyson", 
+			"Lat": 41.723848,
+			"Long": -73.932919  
+			},
+			{
+			"Name": "Lowell Thomas",
+			"Lat": 41.723197, 
+			"Long": -73.932690
+			},
+			{
+			"Name": "Fontaine",
+			"Lat": 41.725345, 
+			"Long": -73.933116
+			},
+
+		] 
+}

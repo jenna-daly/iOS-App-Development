@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
+    
+    let locationManagement : CLLocationManager = CLLocationManager()
 
     @IBOutlet var ViewHolder: UIView!
     @IBOutlet weak var MapArrow: UIImageView!
@@ -23,6 +26,10 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        
+        locationManagement.delegate = self
+        locationManagement.requestWhenInUseAuthorization()
+        locationManagement.startUpdatingLocation()
     }
 
     @IBAction func AddLocationPressed(_ sender: Any) {
