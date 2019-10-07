@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7D0467B5234AC85E001B8C4A /* MaristLocations.json in Resources */ = {isa = PBXBuildFile; fileRef = 7D0467B4234AC85E001B8C4A /* MaristLocations.json */; };
 		7D5A1087233828A4007E84CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A1086233828A4007E84CB /* AppDelegate.swift */; };
 		7D5A1089233828A4007E84CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A1088233828A4007E84CB /* ViewController.swift */; };
 		7D5A108C233828A4007E84CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A108A233828A4007E84CB /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		7D0467B4234AC85E001B8C4A /* MaristLocations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = MaristLocations.json; path = ../../MaristLocations.json; sourceTree = "<group>"; };
 		7D5A1083233828A4007E84CB /* MaristCampusMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaristCampusMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D5A1086233828A4007E84CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7D5A1088233828A4007E84CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 		7D5A1085233828A4007E84CB /* MaristCampusMap */ = {
 			isa = PBXGroup;
 			children = (
+				7D0467B4234AC85E001B8C4A /* MaristLocations.json */,
 				7D5A1086233828A4007E84CB /* AppDelegate.swift */,
 				7D5A1088233828A4007E84CB /* ViewController.swift */,
 				7D5A108A233828A4007E84CB /* Main.storyboard */,
@@ -125,6 +128,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D0467B5234AC85E001B8C4A /* MaristLocations.json in Resources */,
 				7D5A1094233828A6007E84CB /* LaunchScreen.storyboard in Resources */,
 				7D5A1091233828A6007E84CB /* Assets.xcassets in Resources */,
 				7D5A108C233828A4007E84CB /* Main.storyboard in Resources */,

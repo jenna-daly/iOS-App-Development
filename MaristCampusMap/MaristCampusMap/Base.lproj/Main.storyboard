@@ -27,6 +27,10 @@
                             <pickerView hidden="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3M9-Be-9sh">
                                 <rect key="frame" x="0.0" y="44" width="375" height="216"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="LwY-Mb-sOr"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="QFd-55-gdW"/>
+                                </connections>
                             </pickerView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QUO-gs-0bT">
                                 <rect key="frame" x="0.0" y="6" width="375" height="44"/>
@@ -39,11 +43,18 @@
                                                 <action selector="SelectLocationPressed:" destination="BYZ-38-t0r" id="fda-Mv-6Ft"/>
                                             </connections>
                                         </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="AddLocationButton" image="plus.square.fill" catalog="system" id="n0D-rb-aSU">
-                                            <connections>
-                                                <action selector="AddLocationPressed:" destination="BYZ-38-t0r" id="DV1-l9-Xx0"/>
-                                            </connections>
-                                        </barButtonItem>
+                                        <rightBarButtonItems>
+                                            <barButtonItem title="AddLocationButton" image="plus.square.fill" catalog="system" id="n0D-rb-aSU">
+                                                <connections>
+                                                    <action selector="AddLocationPressed:" destination="BYZ-38-t0r" id="DV1-l9-Xx0"/>
+                                                </connections>
+                                            </barButtonItem>
+                                            <barButtonItem title="HomeBtn" image="house" catalog="system" id="6uw-z4-exd">
+                                                <connections>
+                                                    <action selector="HomeButtonPressed:" destination="BYZ-38-t0r" id="wtY-rg-0X6"/>
+                                                </connections>
+                                            </barButtonItem>
+                                        </rightBarButtonItems>
                                     </navigationItem>
                                 </items>
                             </navigationBar>
@@ -81,6 +92,7 @@
                         <outlet property="AddLocationBTN" destination="n0D-rb-aSU" id="cDm-Ld-wDm"/>
                         <outlet property="AddLocationView" destination="Ebt-Ac-axB" id="Ubl-L0-dXk"/>
                         <outlet property="EnterNewLocation" destination="3Mz-Eu-TI1" id="Yh2-WG-GOD"/>
+                        <outlet property="HomeBTN" destination="6uw-z4-exd" id="rAk-aL-bnG"/>
                         <outlet property="LocationList" destination="3M9-Be-9sh" id="ewT-iB-4vK"/>
                         <outlet property="MapArrow" destination="4ll-hN-5qb" id="Y9R-tj-fPY"/>
                         <outlet property="Nav" destination="QUO-gs-0bT" id="gWJ-8g-NtV"/>
@@ -97,6 +109,7 @@
     <resources>
         <image name="IntroScreen" width="436" height="300"/>
         <image name="MapArrow" width="432" height="456"/>
+        <image name="house" catalog="system" width="64" height="54"/>
         <image name="plus.square.fill" catalog="system" width="64" height="56"/>
     </resources>
 </document>
