@@ -1,0 +1,5 @@
+Journal 3
+
+This week I didn't accomplish as much as I had planned. I think I underestimated how hard it would be to create a database for the map. It is a simple database, just locations and names, but I haven't worked with SQL or databases in general since sophomore year. I am still torn between using JSON or SQLite. I have been researching documentation for both, mostly leaning toward JSON just because I used it once before. I started to implement JSON parsing. I found this video especially helpful: https://www.youtube.com/watch?v=ih20QtEVCa0. Most of the other videos had the JSON files coming from a server or web page and I was not sure if that was necessary, so this video helped in grabbing the local file. However, the trouble I ran into was grabbing the parsed data to then put into pickerview.
+
+In terms of UI, I implemented a home button so if the user decides not to add/choose a location, they aren't stuck on that page. I also implemented the request to use location while the app is in use.
