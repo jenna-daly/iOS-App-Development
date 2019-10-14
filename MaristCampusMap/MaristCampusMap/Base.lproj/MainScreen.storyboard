@@ -16,17 +16,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="MapArrow" translatesAutoresizingMaskIntoConstraints="NO" id="4ll-hN-5qb">
-                                <rect key="frame" x="72" y="219" width="230" height="229"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MapArrow" translatesAutoresizingMaskIntoConstraints="NO" id="4ll-hN-5qb">
+                                <rect key="frame" x="112.5" y="258.5" width="150" height="150"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="150" id="EdX-PP-ZG5"/>
+                                    <constraint firstAttribute="width" constant="150" id="lAF-CT-XYI"/>
+                                </constraints>
                             </imageView>
-                            <pickerView hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3M9-Be-9sh">
-                                <rect key="frame" x="0.0" y="44" width="375" height="216"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="LwY-Mb-sOr"/>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="QFd-55-gdW"/>
-                                </connections>
-                            </pickerView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUO-gs-0bT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -87,18 +83,25 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uA1-nh-o2b" userLabel="Text Field">
+                                <rect key="frame" x="0.0" y="633" width="375" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="3M9-Be-9sh" firstAttribute="top" secondItem="QUO-gs-0bT" secondAttribute="bottom" id="3PE-Ft-W2E"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uA1-nh-o2b" secondAttribute="trailing" id="0dd-wJ-Jdu"/>
+                            <constraint firstItem="4ll-hN-5qb" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="28j-Mq-kT3"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="QUO-gs-0bT" secondAttribute="trailing" id="DCY-jF-mzA"/>
-                            <constraint firstItem="3M9-Be-9sh" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="G3Y-3B-4bL"/>
                             <constraint firstItem="wpo-EW-AE3" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="15" id="Hj0-sF-bdh"/>
                             <constraint firstItem="QUO-gs-0bT" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="Iai-ow-vCV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="wpo-EW-AE3" secondAttribute="trailing" constant="15" id="Jmk-Tt-19e"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="uA1-nh-o2b" secondAttribute="bottom" id="QRJ-q7-A6S"/>
                             <constraint firstItem="wpo-EW-AE3" firstAttribute="top" secondItem="QUO-gs-0bT" secondAttribute="bottom" constant="10" id="TCx-Gf-1ja"/>
                             <constraint firstItem="QUO-gs-0bT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="iDS-mI-d8u"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="3M9-Be-9sh" secondAttribute="trailing" id="idJ-f2-185"/>
+                            <constraint firstItem="4ll-hN-5qb" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="rvJ-uC-QPm"/>
+                            <constraint firstItem="uA1-nh-o2b" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="u2k-xR-kUc"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -107,12 +110,12 @@
                         <outlet property="AddLocationView" destination="Ebt-Ac-axB" id="Ubl-L0-dXk"/>
                         <outlet property="EnterNewLocation" destination="3Mz-Eu-TI1" id="Yh2-WG-GOD"/>
                         <outlet property="HomeBTN" destination="6uw-z4-exd" id="rAk-aL-bnG"/>
-                        <outlet property="LocationList" destination="3M9-Be-9sh" id="ewT-iB-4vK"/>
                         <outlet property="MapArrow" destination="4ll-hN-5qb" id="Y9R-tj-fPY"/>
                         <outlet property="Nav" destination="QUO-gs-0bT" id="gWJ-8g-NtV"/>
                         <outlet property="SelectLocationBTN" destination="uWR-9q-mxn" id="BsJ-WD-XS5"/>
                         <outlet property="SelectedLocationLabel" destination="wpo-EW-AE3" id="kOd-rW-rdh"/>
                         <outlet property="ViewHolder" destination="8bC-Xf-vdC" id="DNF-iM-YAk"/>
+                        <outlet property="textField" destination="uA1-nh-o2b" id="vZF-iK-HQN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

@@ -17,6 +17,7 @@
 		7D5A1091233828A6007E84CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A1090233828A6007E84CB /* Assets.xcassets */; };
 		7D5A1094233828A6007E84CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A1092233828A6007E84CB /* LaunchScreen.storyboard */; };
 		7D5E99AC235411F0008B7B27 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E99AB235411F0008B7B27 /* Constants.swift */; };
+		7D5E99AE235425B6008B7B27 /* ToolbarWithDone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E99AD235425B6008B7B27 /* ToolbarWithDone.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		7D5A1093233828A6007E84CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D5A1095233828A6007E84CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D5E99AB235411F0008B7B27 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7D5E99AD235425B6008B7B27 /* ToolbarWithDone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarWithDone.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +77,7 @@
 				7D4648DD2354061000C34994 /* StartScreenViewController.swift */,
 				7D4648DF2354064A00C34994 /* StartScreen.storyboard */,
 				7D5E99AB235411F0008B7B27 /* Constants.swift */,
+				7D5E99AD235425B6008B7B27 /* ToolbarWithDone.swift */,
 			);
 			path = MaristCampusMap;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7D5E99AC235411F0008B7B27 /* Constants.swift in Sources */,
+				7D5E99AE235425B6008B7B27 /* ToolbarWithDone.swift in Sources */,
 				7D5A1089233828A4007E84CB /* MainScreenViewController.swift in Sources */,
 				7D5A108F233828A4007E84CB /* MaristCampusMap.xcdatamodeld in Sources */,
 				7D4648DE2354061000C34994 /* StartScreenViewController.swift in Sources */,

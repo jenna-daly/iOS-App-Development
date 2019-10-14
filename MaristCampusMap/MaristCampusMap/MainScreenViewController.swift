@@ -19,21 +19,30 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var SelectLocationBTN: UIBarButtonItem!
     @IBOutlet weak var AddLocationBTN: UIBarButtonItem!
     @IBOutlet weak var AddLocationView: UIView!
-    @IBOutlet weak var LocationList: UIPickerView!
     @IBOutlet weak var EnterNewLocation: UITextField!
     @IBOutlet weak var HomeBTN: UIBarButtonItem!
     @IBOutlet weak var SelectedLocationLabel: UILabel!
+    @IBOutlet weak var textField: UITextField!
+    
+    let pickerView = ToolbarPickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.LocationList.delegate = self
-        self.LocationList.dataSource = self
         // Do any additional setup after loading the view.
         
         locationManagement.delegate = self
         locationManagement.requestWhenInUseAuthorization()
         locationManagement.startUpdatingLocation()
         
+        
+        self.textField.inputView = self.pickerView
+        self.textField.inputAccessoryView = self.pickerView.toolbar
+        
+        self.pickerView.dataSource = self
+        self.pickerView.delegate = self
+        self.pickerView.toolbarDelegate = self
+
+        self.pickerView.reloadAllComponents()
     }
     //let cannot be reassigned
     var pickerOptions : [PickerOption] {
@@ -69,19 +78,20 @@ class MainScreenViewController: UIViewController {
     @IBAction func SelectLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
-        LocationList.isHidden = false
+        self.textField.becomeFirstResponder()
 
     }
     @IBAction func HomeButtonPressed(_ sender: Any) {
         //add storyboard reference like we did in startscreen
         AddLocationView.isHidden = true
         MapArrow.isHidden = false
-        LocationList.isHidden = true
-        self.SelectedLocationLabel.text = self.selectedLocation!.name
+        //self.SelectedLocationLabel.text = self.selectedLocation!.name
     }
     
     
 }
+
+// MARK: - Extensions
 
 extension MainScreenViewController : UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
@@ -108,5 +118,19 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             //then update arrow orientation, compare to self.selected
             print(location)
         }
+    }
+}
+
+extension MainScreenViewController : ToolbarPickerViewDelegate {
+    func didTapDone() {
+        let row = self.pickerView.selectedRow(inComponent: 0)
+        self.pickerView.selectRow(row, inComponent: 0, animated: false)
+        self.SelectedLocationLabel.text = self.pickerOptions[row].name
+        self.textField.resignFirstResponder()
+        MapArrow.isHidden = false
+    }
+    func didTapCancel() {
+        self.SelectedLocationLabel.text = nil
+        self.textField.resignFirstResponder()
     }
 }
