@@ -79,6 +79,7 @@ class MainScreenViewController: UIViewController {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
         self.textField.becomeFirstResponder()
+        self.SelectedLocationLabel.text = ""
 
     }
     @IBAction func HomeButtonPressed(_ sender: Any) {
@@ -125,7 +126,8 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
     func didTapDone() {
         let row = self.pickerView.selectedRow(inComponent: 0)
         self.pickerView.selectRow(row, inComponent: 0, animated: false)
-        self.SelectedLocationLabel.text = self.pickerOptions[row].name
+        self.SelectedLocationLabel.text = String("\(self.pickerOptions[row].location.latitude) \t \(self.pickerOptions[row].location.longitude)")
+        //self.SelectedLocationLabel.text = self.pickerOptions[row].name
         self.textField.resignFirstResponder()
         MapArrow.isHidden = false
     }
