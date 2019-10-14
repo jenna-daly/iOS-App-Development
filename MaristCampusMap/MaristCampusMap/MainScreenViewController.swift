@@ -29,6 +29,7 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        EnterNewLocation.delegate = self
         
         locationManagement.delegate = self
         locationManagement.requestWhenInUseAuthorization()
@@ -89,6 +90,15 @@ class MainScreenViewController: UIViewController {
         //self.SelectedLocationLabel.text = self.selectedLocation!.name
     }
     
+    @IBAction func AddBtn(_ sender: Any) {
+        print(EnterNewLocation.text!)
+        
+        let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: 43.0000, lng: -73.0000)
+        
+        Constants.pickerOptions.append(tempLoc)
+        
+        EnterNewLocation.text = ""
+    }
     
 }
 
@@ -134,5 +144,12 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
     func didTapCancel() {
         self.SelectedLocationLabel.text = nil
         self.textField.resignFirstResponder()
+    }
+}
+
+extension MainScreenViewController : UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
 }

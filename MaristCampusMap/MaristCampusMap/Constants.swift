@@ -18,7 +18,7 @@ struct PickerOption {
     let location : CLLocationCoordinate2D
 }
 struct Constants {
-    static let pickerOptions = [
+    static var pickerOptions = [
     PickerOption(name: "Allied Health", lat: 41.722018, lng: -73.930244),
     PickerOption(name: "Donnelly", lat: 41.721012, lng: -73.932929),
     PickerOption(name: "Dyson", lat: 41.723848, lng: -73.932919),
