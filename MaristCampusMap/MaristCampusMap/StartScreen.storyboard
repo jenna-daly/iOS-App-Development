@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="l9N-7W-aKC">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Start Screen View Controller-->
+        <scene sceneID="oQW-em-eoG">
+            <objects>
+                <viewController id="l9N-7W-aKC" customClass="StartScreenViewController" customModule="MaristCampusMap" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bPe-Dm-NGk">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZk-uF-1a8">
+                                <rect key="frame" x="62.5" y="233.5" width="250" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="OjC-D5-nJp"/>
+                                    <constraint firstAttribute="width" constant="250" id="fBT-XA-qNQ"/>
+                                </constraints>
+                                <state key="normal" image="IntroScreen"/>
+                                <connections>
+                                    <action selector="onStartClick:" destination="l9N-7W-aKC" eventType="touchUpInside" id="lGQ-8C-6EX"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="aZk-uF-1a8" firstAttribute="centerY" secondItem="Tvx-iD-QZQ" secondAttribute="centerY" id="FZt-WO-H1C"/>
+                            <constraint firstItem="aZk-uF-1a8" firstAttribute="centerX" secondItem="Tvx-iD-QZQ" secondAttribute="centerX" id="gpI-Xs-5qJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="Tvx-iD-QZQ"/>
+                    </view>
+                    <connections>
+                        <segue destination="LU8-lM-IJ4" kind="show" identifier="mainScreenSegue" id="BGT-2M-2x6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eEY-6T-Eo2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-32.799999999999997" y="-11.244377811094454"/>
+        </scene>
+        <!--MainScreen-->
+        <scene sceneID="1Em-fa-snG">
+            <objects>
+                <viewControllerPlaceholder storyboardName="MainScreen" id="LU8-lM-IJ4" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="Zyh-ch-tcD"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fcu-gN-E1P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="852" y="-235"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="IntroScreen" width="436" height="300"/>
+    </resources>
+</document>

@@ -8,24 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		7D0467B5234AC85E001B8C4A /* MaristLocations.json in Resources */ = {isa = PBXBuildFile; fileRef = 7D0467B4234AC85E001B8C4A /* MaristLocations.json */; };
+		7D4648DE2354061000C34994 /* StartScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D4648DD2354061000C34994 /* StartScreenViewController.swift */; };
+		7D4648E02354064A00C34994 /* StartScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D4648DF2354064A00C34994 /* StartScreen.storyboard */; };
 		7D5A1087233828A4007E84CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A1086233828A4007E84CB /* AppDelegate.swift */; };
-		7D5A1089233828A4007E84CB /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A1088233828A4007E84CB /* ViewController.swift */; };
-		7D5A108C233828A4007E84CB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A108A233828A4007E84CB /* Main.storyboard */; };
+		7D5A1089233828A4007E84CB /* MainScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A1088233828A4007E84CB /* MainScreenViewController.swift */; };
+		7D5A108C233828A4007E84CB /* MainScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A108A233828A4007E84CB /* MainScreen.storyboard */; };
 		7D5A108F233828A4007E84CB /* MaristCampusMap.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7D5A108D233828A4007E84CB /* MaristCampusMap.xcdatamodeld */; };
 		7D5A1091233828A6007E84CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A1090233828A6007E84CB /* Assets.xcassets */; };
 		7D5A1094233828A6007E84CB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D5A1092233828A6007E84CB /* LaunchScreen.storyboard */; };
+		7D5E99AC235411F0008B7B27 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7D5E99AB235411F0008B7B27 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		7D0467B4234AC85E001B8C4A /* MaristLocations.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; name = MaristLocations.json; path = ../../MaristLocations.json; sourceTree = "<group>"; };
+		7D4648DD2354061000C34994 /* StartScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenViewController.swift; sourceTree = "<group>"; };
+		7D4648DF2354064A00C34994 /* StartScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = StartScreen.storyboard; sourceTree = "<group>"; };
 		7D5A1083233828A4007E84CB /* MaristCampusMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaristCampusMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D5A1086233828A4007E84CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7D5A1088233828A4007E84CB /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		7D5A108B233828A4007E84CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7D5A1088233828A4007E84CB /* MainScreenViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenViewController.swift; sourceTree = "<group>"; };
+		7D5A108B233828A4007E84CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainScreen.storyboard; sourceTree = "<group>"; };
 		7D5A108E233828A4007E84CB /* MaristCampusMap.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MaristCampusMap.xcdatamodel; sourceTree = "<group>"; };
 		7D5A1090233828A6007E84CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7D5A1093233828A6007E84CB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D5A1095233828A6007E84CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7D5E99AB235411F0008B7B27 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,12 +66,15 @@
 			children = (
 				7D0467B4234AC85E001B8C4A /* MaristLocations.json */,
 				7D5A1086233828A4007E84CB /* AppDelegate.swift */,
-				7D5A1088233828A4007E84CB /* ViewController.swift */,
-				7D5A108A233828A4007E84CB /* Main.storyboard */,
+				7D5A1088233828A4007E84CB /* MainScreenViewController.swift */,
+				7D5A108A233828A4007E84CB /* MainScreen.storyboard */,
 				7D5A1090233828A6007E84CB /* Assets.xcassets */,
 				7D5A1092233828A6007E84CB /* LaunchScreen.storyboard */,
 				7D5A1095233828A6007E84CB /* Info.plist */,
 				7D5A108D233828A4007E84CB /* MaristCampusMap.xcdatamodeld */,
+				7D4648DD2354061000C34994 /* StartScreenViewController.swift */,
+				7D4648DF2354064A00C34994 /* StartScreen.storyboard */,
+				7D5E99AB235411F0008B7B27 /* Constants.swift */,
 			);
 			path = MaristCampusMap;
 			sourceTree = "<group>";
@@ -131,7 +140,8 @@
 				7D0467B5234AC85E001B8C4A /* MaristLocations.json in Resources */,
 				7D5A1094233828A6007E84CB /* LaunchScreen.storyboard in Resources */,
 				7D5A1091233828A6007E84CB /* Assets.xcassets in Resources */,
-				7D5A108C233828A4007E84CB /* Main.storyboard in Resources */,
+				7D4648E02354064A00C34994 /* StartScreen.storyboard in Resources */,
+				7D5A108C233828A4007E84CB /* MainScreen.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,8 +152,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D5A1089233828A4007E84CB /* ViewController.swift in Sources */,
+				7D5E99AC235411F0008B7B27 /* Constants.swift in Sources */,
+				7D5A1089233828A4007E84CB /* MainScreenViewController.swift in Sources */,
 				7D5A108F233828A4007E84CB /* MaristCampusMap.xcdatamodeld in Sources */,
+				7D4648DE2354061000C34994 /* StartScreenViewController.swift in Sources */,
 				7D5A1087233828A4007E84CB /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -151,12 +163,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		7D5A108A233828A4007E84CB /* Main.storyboard */ = {
+		7D5A108A233828A4007E84CB /* MainScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				7D5A108B233828A4007E84CB /* Base */,
 			);
-			name = Main.storyboard;
+			name = MainScreen.storyboard;
 			sourceTree = "<group>";
 		};
 		7D5A1092233828A6007E84CB /* LaunchScreen.storyboard */ = {
