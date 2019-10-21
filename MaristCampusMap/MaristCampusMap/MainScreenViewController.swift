@@ -31,6 +31,11 @@ class MainScreenViewController: UIViewController {
     var lastLocation: CLLocation? = nil
     
     //lock orientation code to come
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        get {
+            return .portrait
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,6 +114,10 @@ class MainScreenViewController: UIViewController {
             Constants.pickerOptions.append(tempLoc)
             
             EnterNewLocation.text = ""
+
+            let alert = UIAlertController(title: "Yay!", message: "You have successfully added a new location. You can now select it from the drop down or add more.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
                         
         }
         else {
