@@ -26,6 +26,12 @@ class MainScreenViewController: UIViewController {
     
     let pickerView = ToolbarPickerView()
     
+    var selectedPickerOption: PickerOption? = nil
+    
+    var lastLocation: CLLocation? = nil
+    
+    //lock orientation code to come
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -33,8 +39,9 @@ class MainScreenViewController: UIViewController {
         
         locationManagement.delegate = self
         locationManagement.requestWhenInUseAuthorization()
+        locationManagement.desiredAccuracy = kCLLocationAccuracyBest
         locationManagement.startUpdatingLocation()
-        
+        locationManagement.startUpdatingHeading()
         
         self.textField.inputView = self.pickerView
         self.textField.inputAccessoryView = self.pickerView.toolbar
@@ -44,6 +51,10 @@ class MainScreenViewController: UIViewController {
         self.pickerView.toolbarDelegate = self
 
         self.pickerView.reloadAllComponents()
+        
+        MapArrow.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        
+        self.SelectedLocationLabel.backgroundColor = UIColor.blue
     }
     //let cannot be reassigned
     var pickerOptions : [PickerOption] {
@@ -79,8 +90,8 @@ class MainScreenViewController: UIViewController {
     @IBAction func SelectLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
-        self.textField.becomeFirstResponder()
         self.SelectedLocationLabel.text = ""
+        self.textField.becomeFirstResponder()
 
     }
     @IBAction func HomeButtonPressed(_ sender: Any) {
@@ -92,13 +103,22 @@ class MainScreenViewController: UIViewController {
     
     @IBAction func AddBtn(_ sender: Any) {
         print(EnterNewLocation.text!)
+        if let location = locationManagement.location?.coordinate {
+            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude)
+            
+            Constants.pickerOptions.append(tempLoc)
+            
+            EnterNewLocation.text = ""
+                        
+        }
+        else {
+            let alert = UIAlertController(title: "Alert", message: "There was an error getting your location. Please make sure location services are enabled.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
+        }
         
-        let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: 43.0000, lng: -73.0000)
-        
-        Constants.pickerOptions.append(tempLoc)
-        
-        EnterNewLocation.text = ""
     }
+    
     
 }
 
@@ -124,19 +144,24 @@ extension MainScreenViewController : UIPickerViewDataSource, UIPickerViewDelegat
 extension MainScreenViewController : CLLocationManagerDelegate {
     //print current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        //let locValue:CLLocationCoordinate2D = manager.location!.coordinate
+
         if let location = locations.last {
-            //compare selected location to this location and get angle bearing for arrow
-            //then update arrow orientation, compare to self.selected
+            
+            self.lastLocation = location
             print(location)
+
         }
     }
+    
 }
 
 extension MainScreenViewController : ToolbarPickerViewDelegate {
     func didTapDone() {
         let row = self.pickerView.selectedRow(inComponent: 0)
-        self.pickerView.selectRow(row, inComponent: 0, animated: false)
-        self.SelectedLocationLabel.text = String("\(self.pickerOptions[row].location.latitude) \t \(self.pickerOptions[row].location.longitude)")
+        self.selectedPickerOption = self.pickerOptions[row]
+        //self.pickerView.selectRow(row, inComponent: 0, animated: false)
+        self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.location.latitude) \t \(self.selectedPickerOption!.location.longitude)")
         //self.SelectedLocationLabel.text = self.pickerOptions[row].name
         self.textField.resignFirstResponder()
         MapArrow.isHidden = false

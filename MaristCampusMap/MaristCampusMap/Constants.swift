@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-struct PickerOption {
+struct PickerOption { //rename
     init(name : String, lat : Double, lng : Double) {
         self.name = name
         self.location = CLLocationCoordinate2D(latitude: lat, longitude: lng)
@@ -17,7 +17,7 @@ struct PickerOption {
     let name : String
     let location : CLLocationCoordinate2D
 }
-struct Constants {
+struct Constants { //rename
     static var pickerOptions = [
     PickerOption(name: "Allied Health", lat: 41.722018, lng: -73.930244),
     PickerOption(name: "Donnelly", lat: 41.721012, lng: -73.932929),
