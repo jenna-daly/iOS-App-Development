@@ -119,6 +119,30 @@ class MainScreenViewController: UIViewController {
         
     }
     
+    func deg2rad(_ number: Double) -> Double {
+        return number * .pi / 180
+    }
+    func rad2deg(_ number: Double) -> Double {
+        return number * 180.0 / .pi
+    }
+    
+    func getBearingBetweenTwoPoints1(point1 : CLLocation, point2 : CLLocation) -> Double {
+
+        let lat1 = deg2rad(point1.coordinate.latitude)
+        let lon1 = deg2rad(point1.coordinate.longitude)
+
+        let lat2 = deg2rad(point2.coordinate.latitude)
+        let lon2 = deg2rad(point2.coordinate.longitude)
+
+        let dLon = lon2 - lon1
+
+        let y = sin(dLon) * cos(lat2)
+        let x = cos(lat1) * sin(lat2) - sin(lat1) * cos(lat2) * cos(dLon)
+        let radiansBearing = atan2(y, x)
+
+        return radiansBearing
+    }
+
     
 }
 
@@ -150,10 +174,35 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             
             self.lastLocation = location
             print(location)
+            //compare selected location to this location and get angle bearing for arrow
+            //then update arrow orientation, compare to self.selected
+            /*let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            //print(location)
+            let bearingInRad = getBearingBetweenTwoPoints1(point1: location, point2: _selectedLocation)
+            
+            print(rad2deg(bearingInRad))
+            //MapArrow.transform = CGAffineTransform(rotationAngle: CGFloat(bearingInRad))
+            let latestBearing = CGFloat(bearingInRad)
+            UIView.animate(withDuration: 0.5) {
+            self.MapArrow.transform = CGAffineTransform(rotationAngle: latestBearing - latestHeading)
+            }*/
 
         }
     }
     
+    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+        if let _lastLocation = self.lastLocation, let selectedLocation = self.selectedPickerOption?.location {
+            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            let yourLocationBearing = getBearingBetweenTwoPoints1(point1: _lastLocation, point2: _selectedLocation)
+            var recommendedHeading = yourLocationBearing - deg2rad(newHeading.trueHeading)
+            if (UIDevice.current.orientation == .faceDown) {
+                recommendedHeading = -recommendedHeading
+            }
+            UIView.animate(withDuration: 0.5) {
+                self.MapArrow.transform = CGAffineTransform(rotationAngle: CGFloat(recommendedHeading))
+            }
+        }
+    }
 }
 
 extension MainScreenViewController : ToolbarPickerViewDelegate {
