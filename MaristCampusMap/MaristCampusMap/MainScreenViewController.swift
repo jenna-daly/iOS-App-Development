@@ -109,7 +109,7 @@ class MainScreenViewController: UIViewController {
     @IBAction func AddBtn(_ sender: Any) {
         print(EnterNewLocation.text!)
         if let location = locationManagement.location?.coordinate {
-            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude)
+            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: "")
             
             Constants.pickerOptions.append(tempLoc)
             
@@ -219,7 +219,8 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
         let row = self.pickerView.selectedRow(inComponent: 0)
         self.selectedPickerOption = self.pickerOptions[row]
         //self.pickerView.selectRow(row, inComponent: 0, animated: false)
-        self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.location.latitude) \t \(self.selectedPickerOption!.location.longitude)")
+        //self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.location.latitude) \t \(self.selectedPickerOption!.location.longitude)")
+        self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.description)")
         //self.SelectedLocationLabel.text = self.pickerOptions[row].name
         self.textField.resignFirstResponder()
         MapArrow.isHidden = false
