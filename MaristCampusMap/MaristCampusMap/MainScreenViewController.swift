@@ -23,6 +23,7 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var HomeBTN: UIBarButtonItem!
     @IBOutlet weak var SelectedLocationLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var ArrivedDisplay: UIImageView!
     
     let pickerView = ToolbarPickerView()
     
@@ -89,12 +90,14 @@ class MainScreenViewController: UIViewController {
     @IBAction func AddLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = false
         MapArrow.isHidden = true
+        ArrivedDisplay.isHidden = true
 
     }
     
     @IBAction func SelectLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
+        ArrivedDisplay.isHidden = true
         self.SelectedLocationLabel.text = ""
         self.textField.becomeFirstResponder()
 
@@ -103,6 +106,7 @@ class MainScreenViewController: UIViewController {
         //add storyboard reference like we did in startscreen
         AddLocationView.isHidden = true
         MapArrow.isHidden = false
+        ArrivedDisplay.isHidden = true
         //self.SelectedLocationLabel.text = self.selectedLocation!.name
     }
     
@@ -182,7 +186,24 @@ extension MainScreenViewController : CLLocationManagerDelegate {
         if let location = locations.last {
             
             self.lastLocation = location
-            print(location)
+            
+            if let selectedLocation =
+                self.selectedPickerOption?.location {
+            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            
+            let distanceInMeters = location.distance(from: _selectedLocation)
+            print(distanceInMeters)
+                if(distanceInMeters < 20.0) {
+                    //let alert = UIAlertController(title: "You are here!", message: "You have reached your destination.", preferredStyle: .alert)
+                    //alert.addAction(UIAlertAction(title: "Done", style: .default, handler: nil))
+                    //self.present(alert, animated: true, completion: nil)
+                    ArrivedDisplay.isHidden = false
+                    MapArrow.isHidden = true
+                }
+                
+            }
+           
+            //print(location)
             //compare selected location to this location and get angle bearing for arrow
             //then update arrow orientation, compare to self.selected
             /*let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
@@ -210,6 +231,10 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             UIView.animate(withDuration: 0.5) {
                 self.MapArrow.transform = CGAffineTransform(rotationAngle: CGFloat(recommendedHeading))
             }
+            
+            /*let distanceInMeters = _selectedLocation.distance(from: _lastLocation)
+            print(distanceInMeters)*/
+            
         }
     }
 }
@@ -224,6 +249,7 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
         //self.SelectedLocationLabel.text = self.pickerOptions[row].name
         self.textField.resignFirstResponder()
         MapArrow.isHidden = false
+        ArrivedDisplay.isHidden = true
     }
     func didTapCancel() {
         self.SelectedLocationLabel.text = nil

@@ -23,6 +23,10 @@
                                     <constraint firstAttribute="width" constant="150" id="lAF-CT-XYI"/>
                                 </constraints>
                             </imageView>
+                            <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="ArrivedDisplay" translatesAutoresizingMaskIntoConstraints="NO" id="c0U-Kw-xl5">
+                                <rect key="frame" x="67" y="269" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QUO-gs-0bT">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                                 <color key="backgroundColor" systemColor="systemRedColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -111,6 +115,7 @@
                     <connections>
                         <outlet property="AddLocationBTN" destination="n0D-rb-aSU" id="cDm-Ld-wDm"/>
                         <outlet property="AddLocationView" destination="Ebt-Ac-axB" id="Ubl-L0-dXk"/>
+                        <outlet property="ArrivedDisplay" destination="c0U-Kw-xl5" id="nSD-Z9-f1e"/>
                         <outlet property="EnterNewLocation" destination="3Mz-Eu-TI1" id="Yh2-WG-GOD"/>
                         <outlet property="HomeBTN" destination="6uw-z4-exd" id="rAk-aL-bnG"/>
                         <outlet property="MapArrow" destination="4ll-hN-5qb" id="Y9R-tj-fPY"/>
@@ -127,6 +132,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ArrivedDisplay" width="486" height="192"/>
         <image name="MapArrow" width="432" height="456"/>
         <image name="house" catalog="system" width="64" height="54"/>
         <image name="plus.square.fill" catalog="system" width="64" height="56"/>
