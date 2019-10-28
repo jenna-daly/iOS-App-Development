@@ -43,7 +43,7 @@ struct Constants { //rename
         PickerOption(name: "Student Center", lat: 41.721424, lng: -73.935330, description: "The Student Center contains many things like the bookstore, student activities, student government, the Music department, the Admission Visitor Center, Post Office, dining hall and more."),
         PickerOption(name: "Tom & Mary Ward Hall", lat: 41.726681, lng: -73.933113, description: "Tom & Mary Ward Hall is a junior and senior residence area. It is an apartment style building with four single rooms, a kitchen, and a living room in each apartment."),
         PickerOption(name: "Upper Fulton", lat: 41.723122, lng: -73.926847, description: "Upper Fulton is a junior residence area. It contains town houses with eight single rooms, a kitchen, a living room, and a washer dryer unit."),
-        PickerOption(name: "Upper New", lat: 41.723634, lng: -73.934594, description: "Uooer New is a sophomore residence area. It contains four double rooms, a kitchen, and a living room."),
+        PickerOption(name: "Upper New", lat: 41.723634, lng: -73.934594, description: "Upper New is a sophomore residence area. It contains four double rooms, a kitchen, and a living room."),
         PickerOption(name: "Upper West", lat: 41.720959, lng: -73.926252, description: "Upper West is a sophomore residence area with four double rooms, a kitchen, and a living room.")
 
         ]
