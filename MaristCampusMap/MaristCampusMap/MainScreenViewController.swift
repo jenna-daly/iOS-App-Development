@@ -27,6 +27,15 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ArrivedDisplay: UIImageView!
     
+    //testing camera
+    var captureSession = AVCaptureSession()
+    var backCamera: AVCaptureDevice?
+    var frontCamera: AVCaptureDevice?
+    var currentCamera: AVCaptureDevice?
+    var photoOutput: AVCapturePhotoOutput?
+    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
+    //end test
+    
     //select location picker view code
     let pickerView = ToolbarPickerView()
     
@@ -45,6 +54,14 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
+        
+        //start
+        setupCaptureSession()
+        setupDevice()
+        setupInputOutput()
+        setupPreviewLayer()
+        startRunningCaptureSession()
+        //end
         
         EnterNewLocation.delegate = self
         
@@ -73,6 +90,45 @@ class MainScreenViewController: UIViewController {
     }
     
     //camera code to go here
+    //start test code for camera
+    func setupCaptureSession(){
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
+    }
+    func setupDevice(){
+        let deviceDiscovery = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+        let devices = deviceDiscovery.devices
+        for device in devices {
+            if device.position == AVCaptureDevice.Position.back {
+                backCamera = device
+            } else if device.position == AVCaptureDevice.Position.front{
+                frontCamera = device
+            }
+        }
+        currentCamera = backCamera
+    }
+    
+    func setupInputOutput(){
+        do{
+            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
+            captureSession.addInput(captureDeviceInput)
+            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
+        }
+        catch{
+            print("error")
+        }
+    }
+    func setupPreviewLayer(){
+        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+        cameraPreviewLayer?.frame = self.view.frame
+        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
+    }
+    func startRunningCaptureSession(){
+        captureSession.startRunning()
+    }
+    //end
     
     //we retrieve our data from the Constants.swift file
     var pickerOptions : [PickerOption] {
