@@ -26,6 +26,7 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var SelectedLocationLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ArrivedDisplay: UIImageView!
+    @IBOutlet weak var openCamera: UIButton!
     
     //testing camera
     var captureSession = AVCaptureSession()
@@ -54,14 +55,6 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
-        
-        //start
-        setupCaptureSession()
-        setupDevice()
-        setupInputOutput()
-        setupPreviewLayer()
-        startRunningCaptureSession()
-        //end
         
         EnterNewLocation.delegate = self
         
@@ -142,6 +135,18 @@ class MainScreenViewController: UIViewController {
     
     //var can be changed, let cannot
     var selectedLocation : PickerOption? = nil
+    
+    
+    @IBAction func openCameraPressed(_ sender: Any) {
+        //start
+        setupCaptureSession()
+        setupDevice()
+        setupInputOutput()
+        setupPreviewLayer()
+        startRunningCaptureSession()
+        //end
+    }
+    
     
     //add-- plus sign nav bar button
     @IBAction func AddLocationPressed(_ sender: Any) {
