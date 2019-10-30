@@ -11,6 +11,7 @@ import CoreLocation
 
 class MainScreenViewController: UIViewController {
     
+    //used to ask for location
     let locationManagement : CLLocationManager = CLLocationManager()
 
     @IBOutlet var ViewHolder: UIView!
@@ -23,14 +24,17 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var HomeBTN: UIBarButtonItem!
     @IBOutlet weak var SelectedLocationLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
+    @IBOutlet weak var ArrivedDisplay: UIImageView!
     
+    //select location picker view code
     let pickerView = ToolbarPickerView()
     
     var selectedPickerOption: PickerOption? = nil
     
+    //used to track user location
     var lastLocation: CLLocation? = nil
     
-    //lock orientation code to come
+    //lock orientation code to come, does not work right now
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         get {
             return .portrait
@@ -42,12 +46,14 @@ class MainScreenViewController: UIViewController {
         // Do any additional setup after loading the view.
         EnterNewLocation.delegate = self
         
+        //additional code to ask for location
         locationManagement.delegate = self
         locationManagement.requestWhenInUseAuthorization()
         locationManagement.desiredAccuracy = kCLLocationAccuracyBest
         locationManagement.startUpdatingLocation()
         locationManagement.startUpdatingHeading()
         
+        //more picker view code
         self.textField.inputView = self.pickerView
         self.textField.inputAccessoryView = self.pickerView.toolbar
         
@@ -57,11 +63,14 @@ class MainScreenViewController: UIViewController {
 
         self.pickerView.reloadAllComponents()
         
+        //gives our image anchor points before we rotate it
         MapArrow.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        self.SelectedLocationLabel.backgroundColor = UIColor.blue
+        //label background color because dark mode changes text to white
+        self.SelectedLocationLabel.backgroundColor = UIColor.red
     }
-    //let cannot be reassigned
+    
+    //we retrieve our data from the Constants.swift file
     var pickerOptions : [PickerOption] {
         get {
             //let userdefaults = userdefaults.get ..
@@ -70,46 +79,42 @@ class MainScreenViewController: UIViewController {
             //need to append user defaults
         }
     }
-    //var can be changed
+    
+    //var can be changed, let cannot
     var selectedLocation : PickerOption? = nil
     
-    //populate picker view w test
-    //let userDict = ["Hancock", "Donnelly", "Lowell Thomas", "Dyson", "Fontaine"]
-
-        
-    /*func pickerView(_ LocationList : UIPickerView, titleForRow row : Int, forComponent component : Int) -> String? {
-        return userDict[row]
-    }
-        
-    func pickerView(_ LocationList : UIPickerView, numberOfRowsInComponent component : Int) -> Int {
-        return userDict.count
-    }*/
-    
-    //button press
+    //add-- plus sign nav bar button
     @IBAction func AddLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = false
         MapArrow.isHidden = true
+        ArrivedDisplay.isHidden = true
 
     }
     
+    //select location nav bar button
     @IBAction func SelectLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
+        ArrivedDisplay.isHidden = true
         self.SelectedLocationLabel.text = ""
         self.textField.becomeFirstResponder()
 
     }
+    
+    //home nav bar button
     @IBAction func HomeButtonPressed(_ sender: Any) {
         //add storyboard reference like we did in startscreen
         AddLocationView.isHidden = true
         MapArrow.isHidden = false
-        //self.SelectedLocationLabel.text = self.selectedLocation!.name
+        ArrivedDisplay.isHidden = true
+        
     }
     
+    //Add button from add location view, appends users current location and given name to list of locations
     @IBAction func AddBtn(_ sender: Any) {
         print(EnterNewLocation.text!)
         if let location = locationManagement.location?.coordinate {
-            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude)
+            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: "")
             
             Constants.pickerOptions.append(tempLoc)
             
@@ -128,6 +133,7 @@ class MainScreenViewController: UIViewController {
         
     }
     
+    //formulas
     func deg2rad(_ number: Double) -> Double {
         return number * .pi / 180
     }
@@ -135,6 +141,7 @@ class MainScreenViewController: UIViewController {
         return number * 180.0 / .pi
     }
     
+    //distance formula
     func getBearingBetweenTwoPoints1(point1 : CLLocation, point2 : CLLocation) -> Double {
 
         let lat1 = deg2rad(point1.coordinate.latitude)
@@ -157,6 +164,7 @@ class MainScreenViewController: UIViewController {
 
 // MARK: - Extensions
 
+//picker view code
 extension MainScreenViewController : UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return self.pickerOptions.count
@@ -170,35 +178,32 @@ extension MainScreenViewController : UIPickerViewDataSource, UIPickerViewDelegat
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         print(self.pickerOptions[row].name)
         self.selectedLocation = self.pickerOptions[row]
-        //self.SelectedLocationLabel.text = self.selectedLocation!.name
     }
 }
 
+
 extension MainScreenViewController : CLLocationManagerDelegate {
-    //print current location
+    //get user's current location
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        //let locValue:CLLocationCoordinate2D = manager.location!.coordinate
 
         if let location = locations.last {
             
             self.lastLocation = location
-            print(location)
-            //compare selected location to this location and get angle bearing for arrow
-            //then update arrow orientation, compare to self.selected
-            /*let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
-            //print(location)
-            let bearingInRad = getBearingBetweenTwoPoints1(point1: location, point2: _selectedLocation)
             
-            print(rad2deg(bearingInRad))
-            //MapArrow.transform = CGAffineTransform(rotationAngle: CGFloat(bearingInRad))
-            let latestBearing = CGFloat(bearingInRad)
-            UIView.animate(withDuration: 0.5) {
-            self.MapArrow.transform = CGAffineTransform(rotationAngle: latestBearing - latestHeading)
-            }*/
-
+            if let selectedLocation =
+                self.selectedPickerOption?.location {
+            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            
+            let distanceInMeters = location.distance(from: _selectedLocation)
+            print(distanceInMeters)
+                if(distanceInMeters < 20.0) {
+                    ArrivedDisplay.isHidden = false
+                    MapArrow.isHidden = true
+                }
+            }
         }
     }
-    
+    //get selected location coordinates, do the math between that and where the user is, take into account the heading or direction of the iPhone, rotate the arrow accordingly
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
         if let _lastLocation = self.lastLocation, let selectedLocation = self.selectedPickerOption?.location {
             let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
@@ -214,15 +219,17 @@ extension MainScreenViewController : CLLocationManagerDelegate {
     }
 }
 
+//more picker view code for done and cancel buttons
 extension MainScreenViewController : ToolbarPickerViewDelegate {
     func didTapDone() {
         let row = self.pickerView.selectedRow(inComponent: 0)
         self.selectedPickerOption = self.pickerOptions[row]
-        //self.pickerView.selectRow(row, inComponent: 0, animated: false)
-        self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.location.latitude) \t \(self.selectedPickerOption!.location.longitude)")
-        //self.SelectedLocationLabel.text = self.pickerOptions[row].name
+        
+        self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.description)")
+       
         self.textField.resignFirstResponder()
         MapArrow.isHidden = false
+        ArrivedDisplay.isHidden = true
     }
     func didTapCancel() {
         self.SelectedLocationLabel.text = nil
