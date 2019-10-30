@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import AVFoundation
 
 class MainScreenViewController: UIViewController {
     
@@ -43,7 +44,8 @@ class MainScreenViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view
+        
         EnterNewLocation.delegate = self
         
         //additional code to ask for location
@@ -69,6 +71,8 @@ class MainScreenViewController: UIViewController {
         //label background color because dark mode changes text to white
         self.SelectedLocationLabel.backgroundColor = UIColor.red
     }
+    
+    //camera code to go here
     
     //we retrieve our data from the Constants.swift file
     var pickerOptions : [PickerOption] {
@@ -105,6 +109,7 @@ class MainScreenViewController: UIViewController {
     @IBAction func HomeButtonPressed(_ sender: Any) {
         //add storyboard reference like we did in startscreen
         AddLocationView.isHidden = true
+        MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
         
@@ -190,14 +195,30 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             
             self.lastLocation = location
             
-            if let selectedLocation =
-                self.selectedPickerOption?.location {
-            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            //show description of buildings you bass
+            for nearLocation in self.pickerOptions {
+                let _selectedLocation = CLLocation(latitude: nearLocation.location.latitude, longitude: nearLocation.location.longitude)
+                print(nearLocation.name)
+                print(_selectedLocation)
+                let distanceInMeters = location.distance(from: _selectedLocation)
+                print(distanceInMeters)
+                if(distanceInMeters < 20.0) {
+                    SelectedLocationLabel.text = String("\(nearLocation.description)")
+                }
+                
+            }
             
-            let distanceInMeters = location.distance(from: _selectedLocation)
-            print(distanceInMeters)
+            //alerts user they have reached their destination
+            /*if let selectedLocation = self.selectedPickerOption?.location {
+                let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)*/
+            if let selectedOption = self.selectedPickerOption {
+                let selectedLocation = CLLocation(latitude: selectedOption.location.latitude, longitude: selectedOption.location.longitude)
+                
+                let distanceInMeters = location.distance(from: selectedLocation)
+                print(distanceInMeters)
                 if(distanceInMeters < 20.0) {
                     ArrivedDisplay.isHidden = false
+                    //MapArrow.image = UIImage(named: "ArrivedDisplay")
                     MapArrow.isHidden = true
                 }
             }
@@ -228,6 +249,7 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
         self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.description)")
        
         self.textField.resignFirstResponder()
+        //MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
     }

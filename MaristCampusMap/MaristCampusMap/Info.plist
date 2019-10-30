@@ -24,6 +24,8 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>StartScreen</string>
+	<key>NSCameraUsageDescription</key>
+	<string>A feature of Marist Maps requires camera usage.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Marist Maps requires the use of your location to help you navigate!</string>
 	<key>UIRequiredDeviceCapabilities</key>
