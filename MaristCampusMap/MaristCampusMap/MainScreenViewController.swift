@@ -38,6 +38,9 @@ class MainScreenViewController: UIViewController {
     var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
     //end test
     
+    //var so app doesn't crash when pressing the camera button again
+    var cameraOpen = false
+    
     //select location picker view code
     let pickerView = ToolbarPickerView()
     
@@ -139,13 +142,16 @@ class MainScreenViewController: UIViewController {
     
     
     @IBAction func openCameraPressed(_ sender: Any) {
-        //start
-        setupCaptureSession()
-        setupDevice()
-        setupInputOutput()
-        setupPreviewLayer()
-        startRunningCaptureSession()
-        //end
+        if(cameraOpen == false) {
+            //start
+            setupCaptureSession()
+            setupDevice()
+            setupInputOutput()
+            setupPreviewLayer()
+            startRunningCaptureSession()
+            cameraOpen = true
+            //end
+        }
     }
     
     
