@@ -27,6 +27,7 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ArrivedDisplay: UIImageView!
     @IBOutlet weak var openCamera: UIButton!
+    @IBOutlet weak var DescriptionInput: UITextField!
     
     //testing camera
     var captureSession = AVCaptureSession()
@@ -180,12 +181,13 @@ class MainScreenViewController: UIViewController {
     @IBAction func AddBtn(_ sender: Any) {
         print(EnterNewLocation.text!)
         if let location = locationManagement.location?.coordinate {
-            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: "")
+            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: DescriptionInput.text ?? "")
             
             Constants.pickerOptions.append(tempLoc)
             
             EnterNewLocation.text = ""
-
+            DescriptionInput.text = ""
+            
             let alert = UIAlertController(title: "Yay!", message: "You have successfully added a new location. You can now select it from the drop down or add more.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
