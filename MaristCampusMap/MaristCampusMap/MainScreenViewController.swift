@@ -28,6 +28,7 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var ArrivedDisplay: UIImageView!
     @IBOutlet weak var openCamera: UIButton!
     @IBOutlet weak var DescriptionInput: UITextField!
+    @IBOutlet weak var DestinationLabel: UILabel!
     
     //testing camera
     var captureSession = AVCaptureSession()
@@ -55,7 +56,7 @@ class MainScreenViewController: UIViewController {
             return .portrait
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
@@ -82,8 +83,6 @@ class MainScreenViewController: UIViewController {
         //gives our image anchor points before we rotate it
         MapArrow.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        //label background color because dark mode changes text to white
-        self.SelectedLocationLabel.backgroundColor = UIColor.red
     }
     
     //camera code to go here
@@ -142,6 +141,7 @@ class MainScreenViewController: UIViewController {
     
     
     @IBAction func openCameraPressed(_ sender: Any) {
+        textField.isHidden = true
         if(cameraOpen == false) {
             //start
             setupCaptureSession()
@@ -160,6 +160,7 @@ class MainScreenViewController: UIViewController {
         AddLocationView.isHidden = false
         MapArrow.isHidden = true
         ArrivedDisplay.isHidden = true
+        textField.isHidden = true
 
     }
     
@@ -168,9 +169,9 @@ class MainScreenViewController: UIViewController {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
         ArrivedDisplay.isHidden = true
+        textField.isHidden = false
         self.SelectedLocationLabel.text = ""
         self.textField.becomeFirstResponder()
-
     }
     
     //home nav bar button
@@ -180,6 +181,7 @@ class MainScreenViewController: UIViewController {
         MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
+        textField.isHidden = true
         
     }
     
@@ -190,7 +192,16 @@ class MainScreenViewController: UIViewController {
             let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: DescriptionInput.text ?? "")
             
             Constants.pickerOptions.append(tempLoc)
-            
+
+             do {
+                let defaults = UserDefaults.standard
+                let encodedData = try NSKeyedArchiver.archivedData(withRootObject: tempLoc, requiringSecureCoding: false)
+                defaults.set(encodedData, forKey: "userAddedLoc")
+                defaults.synchronize()
+             } catch {
+                 print("Couldn't write file")
+             }
+                        
             EnterNewLocation.text = ""
             DescriptionInput.text = ""
             
@@ -264,7 +275,7 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             
             self.lastLocation = location
             
-            //show description of buildings you bass
+            //show description of buildings you pass
             for nearLocation in self.pickerOptions {
                 let _selectedLocation = CLLocation(latitude: nearLocation.location.latitude, longitude: nearLocation.location.longitude)
                 print(nearLocation.name)
@@ -272,14 +283,12 @@ extension MainScreenViewController : CLLocationManagerDelegate {
                 let distanceInMeters = location.distance(from: _selectedLocation)
                 print(distanceInMeters)
                 if(distanceInMeters < 20.0) {
-                    SelectedLocationLabel.text = String("\(nearLocation.description)")
+                    SelectedLocationLabel.text = String("You are passing: \(nearLocation.name)\n\(nearLocation.description)")
                 }
                 
             }
             
             //alerts user they have reached their destination
-            /*if let selectedLocation = self.selectedPickerOption?.location {
-                let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)*/
             if let selectedOption = self.selectedPickerOption {
                 let selectedLocation = CLLocation(latitude: selectedOption.location.latitude, longitude: selectedOption.location.longitude)
                 
@@ -315,7 +324,11 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
         let row = self.pickerView.selectedRow(inComponent: 0)
         self.selectedPickerOption = self.pickerOptions[row]
         
+        //label background color because dark mode changes text to white
+        self.SelectedLocationLabel.backgroundColor = UIColor.red
+        
         self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.description)")
+        self.DestinationLabel.text = String("Destination:  \(self.selectedPickerOption!.name)")
        
         self.textField.resignFirstResponder()
         //MapArrow.image = UIImage(named: "MapArrow")

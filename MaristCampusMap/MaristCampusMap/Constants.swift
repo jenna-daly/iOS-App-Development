@@ -15,9 +15,23 @@ struct PickerOption { //rename
         self.location = CLLocationCoordinate2D(latitude: lat, longitude: lng)
         self.description = description
     }
-    let name : String
-    let location : CLLocationCoordinate2D
-    let description : String
+    
+    /*private enum CodingKeys: String, CodingKey {
+        case name
+        case location
+        case description
+    }
+
+    required init(from decoder:Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        name = try values.decode(String.self, forKey: .name)
+        location = try values.decode(CLLocationCoordinate2D.self, forKey: .location)
+        description = try values.decode(String.self, forKey: .description)
+    }*/
+
+    var name : String
+    var location : CLLocationCoordinate2D
+    var description : String
 }
 struct Constants { //rename
     static var pickerOptions = [

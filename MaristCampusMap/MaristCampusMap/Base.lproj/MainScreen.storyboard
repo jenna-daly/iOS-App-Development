@@ -27,11 +27,18 @@
                                 <rect key="frame" x="67" y="269" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Destination:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdy-Y6-xT1">
+                                <rect key="frame" x="60" y="450" width="287" height="71"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jjA-hG-y7Y">
                                 <rect key="frame" x="334" y="500" width="41" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="Button" image="camera.fill" catalog="system">
+                                <state key="normal" image="camera.fill" catalog="system">
                                     <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                 </state>
                                 <connections>
@@ -114,7 +121,7 @@
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uA1-nh-o2b" userLabel="Text Field">
+                            <textField hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="uA1-nh-o2b" userLabel="Text Field">
                                 <rect key="frame" x="0.0" y="633" width="375" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -141,6 +148,7 @@
                         <outlet property="AddLocationView" destination="Ebt-Ac-axB" id="Ubl-L0-dXk"/>
                         <outlet property="ArrivedDisplay" destination="c0U-Kw-xl5" id="nSD-Z9-f1e"/>
                         <outlet property="DescriptionInput" destination="pqN-AK-jxK" id="LA5-Wq-WJ3"/>
+                        <outlet property="DestinationLabel" destination="Cdy-Y6-xT1" id="YeG-gc-vGP"/>
                         <outlet property="EnterNewLocation" destination="3Mz-Eu-TI1" id="Yh2-WG-GOD"/>
                         <outlet property="HomeBTN" destination="6uw-z4-exd" id="rAk-aL-bnG"/>
                         <outlet property="MapArrow" destination="4ll-hN-5qb" id="Y9R-tj-fPY"/>
