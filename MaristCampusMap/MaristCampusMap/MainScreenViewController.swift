@@ -60,7 +60,7 @@ class MainScreenViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view
-        
+
         EnterNewLocation.delegate = self
         
         //additional code to ask for location
