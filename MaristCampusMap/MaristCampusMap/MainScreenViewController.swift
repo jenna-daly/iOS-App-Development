@@ -29,6 +29,7 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var openCamera: UIButton!
     @IBOutlet weak var DescriptionInput: UITextField!
     @IBOutlet weak var DestinationLabel: UILabel!
+    @IBOutlet weak var bearingLabel: UILabel!
     
     //testing camera
     var captureSession = AVCaptureSession()
@@ -161,6 +162,7 @@ class MainScreenViewController: UIViewController {
         MapArrow.isHidden = true
         ArrivedDisplay.isHidden = true
         textField.isHidden = true
+         self.textField.resignFirstResponder()
 
     }
     
@@ -308,6 +310,8 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
             let yourLocationBearing = getBearingBetweenTwoPoints1(point1: _lastLocation, point2: _selectedLocation)
             var recommendedHeading = yourLocationBearing - deg2rad(newHeading.trueHeading)
+            //bearingLabel.text = String("\(newHeading.trueHeading)")
+            bearingLabel.text =  String("Accuracy: \(newHeading.headingAccuracy)")
             if (UIDevice.current.orientation == .faceDown) {
                 recommendedHeading = -recommendedHeading
             }
@@ -334,8 +338,10 @@ extension MainScreenViewController : ToolbarPickerViewDelegate {
         //MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
+        textField.isHidden = true
     }
     func didTapCancel() {
+        textField.isHidden = true
         self.SelectedLocationLabel.text = nil
         self.textField.resignFirstResponder()
     }

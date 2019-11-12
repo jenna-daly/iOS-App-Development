@@ -27,6 +27,13 @@
                                 <rect key="frame" x="67" y="269" width="240" height="128"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vnq-I1-yZP">
+                                <rect key="frame" x="50" y="520" width="200" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Destination:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cdy-Y6-xT1">
                                 <rect key="frame" x="60" y="450" width="287" height="71"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -156,6 +163,7 @@
                         <outlet property="SelectLocationBTN" destination="uWR-9q-mxn" id="BsJ-WD-XS5"/>
                         <outlet property="SelectedLocationLabel" destination="wpo-EW-AE3" id="kOd-rW-rdh"/>
                         <outlet property="ViewHolder" destination="8bC-Xf-vdC" id="DNF-iM-YAk"/>
+                        <outlet property="bearingLabel" destination="Vnq-I1-yZP" id="12P-bO-wPt"/>
                         <outlet property="openCamera" destination="jjA-hG-y7Y" id="Uys-mv-PMb"/>
                         <outlet property="textField" destination="uA1-nh-o2b" id="vZF-iK-HQN"/>
                     </connections>
