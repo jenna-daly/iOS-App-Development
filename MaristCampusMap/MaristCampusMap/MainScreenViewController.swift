@@ -63,7 +63,6 @@ class MainScreenViewController: UIViewController {
         // Do any additional setup after loading the view
         self.modalPresentationStyle = .fullScreen
         
-        let existingPickerOptions = UserDefaults.standard.value(forKey: "pickerOptions")
         //if user doesn't have any picker options, it means it's the first time they're loading the app and we have to load in our default picker options
         if(self.getPickerOptions().count == 0) {
             let encodedPickerOptions = try? JSONEncoder().encode(defaultPickerOptions)
