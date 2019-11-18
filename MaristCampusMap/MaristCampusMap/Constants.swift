@@ -9,32 +9,22 @@
 import Foundation
 import CoreLocation
 
-struct PickerOption { //rename
+//JSON encoder and decoder can be used when adding Codable protocol
+class PickerOption: Codable {
     init(name : String, lat : Double, lng : Double, description : String) {
         self.name = name
-        self.location = CLLocationCoordinate2D(latitude: lat, longitude: lng)
+        self.latitude = lat
+        self.longitude = lng
         self.description = description
     }
     
-    /*private enum CodingKeys: String, CodingKey {
-        case name
-        case location
-        case description
-    }
-
-    required init(from decoder:Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        name = try values.decode(String.self, forKey: .name)
-        location = try values.decode(CLLocationCoordinate2D.self, forKey: .location)
-        description = try values.decode(String.self, forKey: .description)
-    }*/
-
     var name : String
-    var location : CLLocationCoordinate2D
+    var latitude: Double
+    var longitude: Double
     var description : String
 }
-struct Constants { //rename
-    static var pickerOptions = [
+
+    var defaultPickerOptions: [PickerOption] = [
         PickerOption(name: "Allied Health", lat: 41.722018, lng: -73.930244, description: "Allied Health was completed in 2016. It is home to the Physician's Assistant program and the undergraduate Athletic Training and Medical Technology programs."),
         PickerOption(name: "Donnelly", lat: 41.721012, lng: -73.932929, description: "Donnelly Hall houses financial services, advising and academic services, registrar, accomadations and accessability, safety and security, and the help desk."),
         PickerOption(name: "Dyson", lat: 41.723848, lng: -73.932919, description: "Dyson Center is where the School of Management and School of Social & Behavioral Sciences reside."),
@@ -62,4 +52,4 @@ struct Constants { //rename
 
         ]
     
-}
+

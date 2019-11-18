@@ -12,12 +12,12 @@ class StartScreenViewController: UIViewController {
     @IBAction func onStartClick(_ sender: UIButton) {
         self.performSegue(withIdentifier: "mainScreenSegue", sender: self)
     }
-    //override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-      //  if segue.identifier == "MainScreenSegue" {
-        //    var vc = segue.destination as! MainScreenViewController
-            
-        //}
-    //}
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "MainScreenSegue" {
+            var vc = segue.destination as! MainScreenViewController
+            vc.modalPresentationStyle = .fullScreen
+        }
+    }
     
     
 }
