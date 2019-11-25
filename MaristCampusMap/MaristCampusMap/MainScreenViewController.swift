@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import AVFoundation
 
 class MainScreenViewController: UIViewController {
     
@@ -25,6 +26,22 @@ class MainScreenViewController: UIViewController {
     @IBOutlet weak var SelectedLocationLabel: UILabel!
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var ArrivedDisplay: UIImageView!
+    @IBOutlet weak var openCamera: UIButton!
+    @IBOutlet weak var DescriptionInput: UITextField!
+    @IBOutlet weak var DestinationLabel: UILabel!
+    @IBOutlet weak var bearingLabel: UILabel!
+    
+    //testing camera
+    var captureSession = AVCaptureSession()
+    var backCamera: AVCaptureDevice?
+    var frontCamera: AVCaptureDevice?
+    var currentCamera: AVCaptureDevice?
+    var photoOutput: AVCapturePhotoOutput?
+    var cameraPreviewLayer: AVCaptureVideoPreviewLayer?
+    //end test
+    
+    //var so app doesn't crash when pressing the camera button again
+    var cameraOpen = false
     
     //select location picker view code
     let pickerView = ToolbarPickerView()
@@ -40,10 +57,20 @@ class MainScreenViewController: UIViewController {
             return .portrait
         }
     }
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        // Do any additional setup after loading the view
+        self.modalPresentationStyle = .fullScreen
+        
+        //if user doesn't have any picker options, it means it's the first time they're loading the app and we have to load in our default picker options
+        if(self.getPickerOptions().count == 0) {
+            let encodedPickerOptions = try? JSONEncoder().encode(defaultPickerOptions)
+            try! UserDefaults.standard.set(encodedPickerOptions, forKey: "pickerOptions")
+        }
+        
+        self.pickerOptions = self.getPickerOptions()
+        
         EnterNewLocation.delegate = self
         
         //additional code to ask for location
@@ -66,28 +93,101 @@ class MainScreenViewController: UIViewController {
         //gives our image anchor points before we rotate it
         MapArrow.layer.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         
-        //label background color because dark mode changes text to white
-        self.SelectedLocationLabel.backgroundColor = UIColor.red
     }
     
+    //camera code to go here
+    //start test code for camera
+    func setupCaptureSession(){
+        captureSession.sessionPreset = AVCaptureSession.Preset.photo
+        
+    }
+    func setupDevice(){
+        let deviceDiscovery = AVCaptureDevice.DiscoverySession(deviceTypes: [AVCaptureDevice.DeviceType.builtInWideAngleCamera], mediaType: AVMediaType.video, position: AVCaptureDevice.Position.unspecified)
+        let devices = deviceDiscovery.devices
+        for device in devices {
+            if device.position == AVCaptureDevice.Position.back {
+                backCamera = device
+            } else if device.position == AVCaptureDevice.Position.front{
+                frontCamera = device
+            }
+        }
+        currentCamera = backCamera
+    }
+    
+    func setupInputOutput(){
+        do{
+            let captureDeviceInput = try AVCaptureDeviceInput(device: currentCamera!)
+            captureSession.addInput(captureDeviceInput)
+            photoOutput?.setPreparedPhotoSettingsArray([AVCapturePhotoSettings(format: [AVVideoCodecKey: AVVideoCodecType.jpeg])], completionHandler: nil)
+        }
+        catch{
+            print("error")
+        }
+    }
+    var cameraView: AVCaptureVideoPreviewLayer?
+    func setupPreviewLayer(){
+        cameraPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
+        cameraPreviewLayer?.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraPreviewLayer?.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
+        cameraPreviewLayer?.frame = self.view.frame
+        self.cameraView = cameraPreviewLayer
+        self.view.layer.insertSublayer(cameraPreviewLayer!, at: 0)
+    }
+    func startRunningCaptureSession(){
+        captureSession.startRunning()
+    }
+    //end
+    
     //we retrieve our data from the Constants.swift file
-    var pickerOptions : [PickerOption] {
-        get {
-            //let userdefaults = userdefaults.get ..
-            //return constants.pickeroptions + userdefaults
-            return Constants.pickerOptions
-            //need to append user defaults
+    var pickerOptions : [PickerOption] = []
+    
+    func getPickerOptions() -> Array<PickerOption> {
+        //pulls data from user defaults as JSON and decodes it into picker option objects
+        var pickerOptions: [PickerOption] = []
+        if let data = UserDefaults.standard.value(forKey: "pickerOptions") as? Data {
+            pickerOptions = (try? JSONDecoder().decode([PickerOption].self, from: data)) ?? []
+        }
+        return pickerOptions
+    }
+    func addNewPickerOptions(newValue: PickerOption) {
+        //creates new copy of immutable picker options array
+        var newPickerOptions = self.getPickerOptions().map{$0}
+        newPickerOptions.append(newValue)
+        //takes our picker option array and turns it into JSON data to save to user defaults
+        if let encodedPickerOptions = try? JSONEncoder().encode(newPickerOptions) {
+            UserDefaults.standard.set(encodedPickerOptions, forKey: "pickerOptions")
+        }
+    }
+    //var can be changed, let cannot
+    var selectedLocation : PickerOption? = nil
+    
+    
+    @IBAction func openCameraPressed(_ sender: Any) {
+        textField.isHidden = true
+        if(cameraOpen == false) {
+            //start
+            setupCaptureSession()
+            setupDevice()
+            setupInputOutput()
+            setupPreviewLayer()
+            startRunningCaptureSession()
+            cameraOpen = true
+            //end
+        }
+        else if(cameraOpen == true) {
+            self.cameraView?.removeFromSuperlayer()
+            captureSession.stopRunning()
         }
     }
     
-    //var can be changed, let cannot
-    var selectedLocation : PickerOption? = nil
     
     //add-- plus sign nav bar button
     @IBAction func AddLocationPressed(_ sender: Any) {
         AddLocationView.isHidden = false
         MapArrow.isHidden = true
         ArrivedDisplay.isHidden = true
+        textField.isHidden = true
+        self.textField.resignFirstResponder()
 
     }
     
@@ -96,30 +196,36 @@ class MainScreenViewController: UIViewController {
         AddLocationView.isHidden = true
         MapArrow.isHidden = true
         ArrivedDisplay.isHidden = true
+        textField.isHidden = false
         self.SelectedLocationLabel.text = ""
         self.textField.becomeFirstResponder()
-
     }
     
     //home nav bar button
     @IBAction func HomeButtonPressed(_ sender: Any) {
         //add storyboard reference like we did in startscreen
         AddLocationView.isHidden = true
+        MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
-        
+        textField.isHidden = true
+        self.dismiss(animated: true, completion: nil)
     }
     
     //Add button from add location view, appends users current location and given name to list of locations
     @IBAction func AddBtn(_ sender: Any) {
         print(EnterNewLocation.text!)
         if let location = locationManagement.location?.coordinate {
-            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: "")
+            let tempLoc = PickerOption.init(name: EnterNewLocation.text!, lat: location.latitude, lng: location.longitude, description: DescriptionInput.text ?? "")
             
-            Constants.pickerOptions.append(tempLoc)
-            
+            //add a new option to user defaults and update our picker options array
+            self.addNewPickerOptions(newValue: tempLoc)
+            self.pickerOptions = self.getPickerOptions()
+//            Constants.pickerOptions.append(tempLoc)
+                        
             EnterNewLocation.text = ""
-
+            DescriptionInput.text = ""
+            
             let alert = UIAlertController(title: "Yay!", message: "You have successfully added a new location. You can now select it from the drop down or add more.", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -167,17 +273,17 @@ class MainScreenViewController: UIViewController {
 //picker view code
 extension MainScreenViewController : UIPickerViewDataSource, UIPickerViewDelegate {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return self.pickerOptions.count
+        return pickerOptions.count
     }
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.pickerOptions[row].name
+        return pickerOptions[row].name
     }
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(self.pickerOptions[row].name)
-        self.selectedLocation = self.pickerOptions[row]
+        print(pickerOptions[row].name)
+        selectedLocation = pickerOptions[row]
     }
 }
 
@@ -190,14 +296,28 @@ extension MainScreenViewController : CLLocationManagerDelegate {
             
             self.lastLocation = location
             
-            if let selectedLocation =
-                self.selectedPickerOption?.location {
-            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+            //show description of buildings you pass
+            for nearLocation in pickerOptions {
+                let _selectedLocation = CLLocation(latitude: nearLocation.latitude, longitude: nearLocation.longitude)
+                print(nearLocation.name)
+                print(_selectedLocation)
+                let distanceInMeters = location.distance(from: _selectedLocation)
+                print(distanceInMeters)
+                if(distanceInMeters < 20.0) {
+                    SelectedLocationLabel.text = String("You are passing: \(nearLocation.name)\n\(nearLocation.description)")
+                }
+                
+            }
             
-            let distanceInMeters = location.distance(from: _selectedLocation)
-            print(distanceInMeters)
+            //alerts user they have reached their destination
+            if let selectedOption = self.selectedPickerOption {
+                let selectedLocation = CLLocation(latitude: selectedOption.latitude, longitude: selectedOption.longitude)
+                
+                let distanceInMeters = location.distance(from: selectedLocation)
+                print(distanceInMeters)
                 if(distanceInMeters < 20.0) {
                     ArrivedDisplay.isHidden = false
+                    //MapArrow.image = UIImage(named: "ArrivedDisplay")
                     MapArrow.isHidden = true
                 }
             }
@@ -205,10 +325,12 @@ extension MainScreenViewController : CLLocationManagerDelegate {
     }
     //get selected location coordinates, do the math between that and where the user is, take into account the heading or direction of the iPhone, rotate the arrow accordingly
     func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        if let _lastLocation = self.lastLocation, let selectedLocation = self.selectedPickerOption?.location {
-            let _selectedLocation = CLLocation(latitude: selectedLocation.latitude, longitude: selectedLocation.longitude)
+        if let _lastLocation = self.lastLocation, let selectedLatitude = self.selectedPickerOption?.latitude, let selectedLongitude = self.selectedPickerOption?.longitude {
+            let _selectedLocation = CLLocation(latitude: selectedLatitude, longitude: selectedLongitude)
             let yourLocationBearing = getBearingBetweenTwoPoints1(point1: _lastLocation, point2: _selectedLocation)
             var recommendedHeading = yourLocationBearing - deg2rad(newHeading.trueHeading)
+            //bearingLabel.text = String("\(newHeading.trueHeading)")
+            bearingLabel.text =  String("Accuracy: \(newHeading.headingAccuracy)")
             if (UIDevice.current.orientation == .faceDown) {
                 recommendedHeading = -recommendedHeading
             }
@@ -223,15 +345,22 @@ extension MainScreenViewController : CLLocationManagerDelegate {
 extension MainScreenViewController : ToolbarPickerViewDelegate {
     func didTapDone() {
         let row = self.pickerView.selectedRow(inComponent: 0)
-        self.selectedPickerOption = self.pickerOptions[row]
+        self.selectedPickerOption = pickerOptions[row]
+        
+        //label background color because dark mode changes text to white
+        self.SelectedLocationLabel.backgroundColor = UIColor.red
         
         self.SelectedLocationLabel.text = String("\(self.selectedPickerOption!.description)")
+        self.DestinationLabel.text = String("Destination:  \(self.selectedPickerOption!.name)")
        
         self.textField.resignFirstResponder()
+        //MapArrow.image = UIImage(named: "MapArrow")
         MapArrow.isHidden = false
         ArrivedDisplay.isHidden = true
+        textField.isHidden = true
     }
     func didTapCancel() {
+        textField.isHidden = true
         self.SelectedLocationLabel.text = nil
         self.textField.resignFirstResponder()
     }
