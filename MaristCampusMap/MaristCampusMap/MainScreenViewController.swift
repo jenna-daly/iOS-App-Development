@@ -142,6 +142,10 @@ class MainScreenViewController: UIViewController {
     var pickerOptions : [PickerOption] = []
     
     func getPickerOptions() -> Array<PickerOption> {
+        // TODO pull data from user defaults and join it to the defaultPickerOptions
+        //      to get the full list of picker options (built-in plus user-defined)
+        //      Alternatively, don't pull from user defaults, just use user-defined list of
+        //      picker options if you have it as a variable somewhere
         //pulls data from user defaults as JSON and decodes it into picker option objects
         var pickerOptions: [PickerOption] = []
         if let data = UserDefaults.standard.value(forKey: "pickerOptions") as? Data {
@@ -150,6 +154,8 @@ class MainScreenViewController: UIViewController {
         return pickerOptions
     }
     func addNewPickerOptions(newValue: PickerOption) {
+        // TODO add newValue to a separate list of user-defined PickerOptions
+        // TODO store to UserDefaults only the user-define picker options
         //creates new copy of immutable picker options array
         var newPickerOptions = self.getPickerOptions().map{$0}
         newPickerOptions.append(newValue)
